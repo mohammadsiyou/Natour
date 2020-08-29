@@ -1,0 +1,124 @@
+.popup{
+	position: fixed;
+	left: 0;
+	top: 0;
+	height: 100vh;
+	width: 100%;
+	background-color: rgba($color-black, .8);
+	z-index: 2000;
+	opacity: 0;
+	visibility: hidden;
+	transition: all .3s;
+	
+	@supports (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)){
+		-webkit-backdrop-filter: blur(10px);
+		backdrop-filter: blur(10px);
+		background-color: rgba($color-black, .3);
+	}
+	
+	&:target{
+		opacity: 1;
+		visibility: visible;	
+	}
+	&:target &__content{
+		transform: translate(-50%, -50%) scale(1);	
+		opacity: 1;
+		
+		@include respond(tab-port){
+			transform: translate(-50%, -50%) scale(1);
+		}
+	}
+
+	&__content{
+		@include center;
+		width: 75%;
+		border-radius: 3px;
+		background-color: $color-white;
+		box-shadow: 0 2rem 4rem rgba($color-black, .2);
+		overflow: hidden;
+		display: table;
+		transform: translate(-50%, -50%) scale(.25);
+		opacity: 0;
+		transition: all .5s .2s;
+		z-index: 1;
+		
+		@include respond(tab-port){
+			transform: translate(-50%, -50%) scale(1);
+			width: 95%;
+			position: relative;
+			left: 50%;
+			top: 50%;
+			display: block;
+		}		
+	}
+		
+	&__left{
+		width: 33.333333%;
+		display: table-cell;
+		@include respond(phone){
+			width: 100%;
+			display: flex;
+		}		
+	}
+	
+	&__right{
+		width: 66.666667%;
+		display: table-cell;
+		vertical-align: middle;
+		padding: 3rem 5rem;
+		@include respond(phone){
+			width: 100%;
+			display: block;
+			padding: 3rem 3rem;
+			text-align: center;
+		}		
+	}
+	
+	&__image{
+		width: 100%;
+		display: block;
+		@include respond(phone){
+			width: 50%;
+			float: left;
+		}		
+	}
+	
+	&__text{
+		font-size: 1.4rem;
+		margin-bottom: 4rem;
+		column-count: 2;
+		column-gap: 4rem; //1em = 14px (reminder)
+		column-rule: 1px solid $color-grey-light-2;	
+		hyphens: auto;
+	}
+	
+	&__close{
+		&:link, &:visited{
+			position: absolute;
+			top: 2.5rem;
+			right: 2.5rem;
+			font-size: 3rem;
+			color: $color-grey-dark;
+			display: inline-block;
+			text-decoration: none;
+			line-height: 1;
+			transition: all .2s;
+		}
+		
+		&:hover{
+			color: $color-primary;
+		}
+	}
+	&__backdrop{
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		cursor: default;
+		visibility: hidden;
+	}
+	&:target &__backdrop{
+		visibility: visible;
+	}
+}
